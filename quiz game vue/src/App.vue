@@ -6,8 +6,9 @@
 <template>
   
   <div>
-    <h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima reiciendis quasi unde iste perferendis quam? Minima esse totam similique dolorum saepe delectus, facere nobis numquam laudantium iure voluptas a aliquid?</h1>
-  
+    
+    <h1 v-html="this.question"></h1>
+    
 
     <div class="form-check">
   <input class="form-check-input" type="radio" name="options"  value="True" >
@@ -42,3 +43,30 @@
 
 }
 </style>
+<script>
+export default{
+  name:'App',
+  data(){
+    return{
+      question:undefined,
+      incorrectAnswer:undefined,
+      correctAnswer:undefined
+     
+      
+    }
+  },
+created(){
+  this.axios 
+  .get('https://opentdb.com/api.php?amount=1&category=11&type=boolean')
+  .then((response) => {
+    this.question = response.data.results[0].question;
+    this.incorrectAnswer = response.data.results[0].incorrect_answers[0];
+    this.correctAnswer = response.data.results[0].correct_answer;
+    
+  })
+  
+}
+
+}
+
+</script>
