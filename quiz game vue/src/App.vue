@@ -11,7 +11,7 @@
     
 
     <div class="form-check">
-  <input class="form-check-input" type="radio" name="options"  value="True" >
+  <input class="form-check-input" type="radio" name="options"  value="True" v-model="this.chosenAnswer" >
   <label class="form-check-label" >
     True
   </label>
@@ -19,7 +19,7 @@
 
   
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="options"  value="False" >
+  <input class="form-check-input" type="radio" name="options"  value="False" v-model="this.chosenAnswer" >
   <label class="form-check-label" >
     False
   </label>
@@ -28,7 +28,7 @@
 
 
 
-  <button class="send btn btn-success" type="button"> Send</button><br>
+  <button @click="this.submitAnswer()" class="send btn btn-success" type="button"> Send</button><br>
   </div>
  
 </template>
@@ -49,18 +49,29 @@ export default{
   data(){
     return{
       question:undefined,
-      incorrectAnswer:undefined,
-      correctAnswer:undefined
+      correctAnswer:undefined,
+      chosenAnswer:undefined
      
       
     }
   },
+  methods:{
+    submitAnswer(){
+      if(this.chosenAnswer===this.correctAnswer){
+        alert("Correct")
+      }else{
+        alert("Wrong")
+      }
+    }
+  },
+  
+
+  
 created(){
   this.axios 
   .get('https://opentdb.com/api.php?amount=1&category=11&type=boolean')
   .then((response) => {
     this.question = response.data.results[0].question;
-    this.incorrectAnswer = response.data.results[0].incorrect_answers[0];
     this.correctAnswer = response.data.results[0].correct_answer;
     
   })
