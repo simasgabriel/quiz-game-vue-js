@@ -11,7 +11,7 @@
     
 
     <div class="form-check">
-  <input class="form-check-input" type="radio" name="options"  value="True" v-model="this.chosenAnswer" >
+  <input :disabled="this.answerSubmitted" class="form-check-input" type="radio" name="options"  value="True" v-model="this.chosenAnswer" >
   <label class="form-check-label" >
     True
   </label>
@@ -19,7 +19,7 @@
 
   
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="options"  value="False" v-model="this.chosenAnswer" >
+  <input :disabled="this.answerSubmitted" class="form-check-input" type="radio" name="options"  value="False" v-model="this.chosenAnswer" >
   <label class="form-check-label" >
     False
   </label>
@@ -28,8 +28,14 @@
 
 
 
-  <button @click="this.submitAnswer()" class="send btn btn-success" type="button"> Send</button><br>
+  
   </div>
+  <div class="result" v-if="this.answerSubmitted">
+    <h2 v-if="this.chosenAnswer==this.correctAnswer" class="text-success">&#9989;Corret answer</h2>
+    <h2 v-else class="text-danger"> &#10060;Wrong answer</h2>
+  </div>
+  <button v-if="!this.answerSubmitted" @click="this.submitAnswer()" class="send btn btn-success" type="button"> Send</button><br>
+  <button v-if="this.answerSubmitted"  class="nextq btn btn-primary" type="button"> Next question</button><br>
  
 </template>
 
@@ -50,18 +56,17 @@ export default{
     return{
       question:undefined,
       correctAnswer:undefined,
-      chosenAnswer:undefined
+      chosenAnswer:undefined,
+      answerSubmitted:false
      
       
     }
   },
   methods:{
     submitAnswer(){
-      if(this.chosenAnswer===this.correctAnswer){
-        alert("Correct")
-      }else{
-        alert("Wrong")
-      }
+      this.answerSubmitted=true;
+            
+      
     }
   },
   
