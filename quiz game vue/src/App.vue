@@ -35,7 +35,7 @@
     <h2 v-else class="text-danger"> &#10060;Wrong answer</h2>
   </div>
   <button v-if="!this.answerSubmitted" @click="this.submitAnswer()" class="send btn btn-success" type="button"> Send</button><br>
-  <button v-if="this.answerSubmitted"  class="nextq btn btn-primary" type="button"> Next question</button><br>
+  <button v-if="this.answerSubmitted" @click="this.newQuestion()" class="nextq btn btn-primary" type="button"> Next question</button><br>
  
 </template>
 
@@ -67,8 +67,20 @@ export default{
       this.answerSubmitted=true;
             
       
-    }
-  },
+    },
+    newQuestion(){
+    
+  this.axios 
+  .get('https://opentdb.com/api.php?amount=1&category=11&type=boolean')
+  .then((response) => {
+    this.question = response.data.results[0].question;
+    this.correctAnswer = response.data.results[0].correct_answer;
+    
+  })
+  this.answerSubmitted=false;
+
+  }
+},
   
 
   
