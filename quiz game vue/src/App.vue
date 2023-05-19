@@ -6,6 +6,7 @@
 <template>
   
   <div>
+   
     
     <h1 v-html="this.question"></h1>
     
@@ -33,9 +34,18 @@
   <div class="result" v-if="this.answerSubmitted">
     <h2 v-if="this.chosenAnswer==this.correctAnswer" class="text-success">&#9989;Corret answer</h2>
     <h2 v-else class="text-danger"> &#10060;Wrong answer</h2>
+    
+  
   </div>
+  <section v-if="this.scoreBoardOn" class="text-info" >
+    <h2><ScoreBoard /></h2>
+      
+
+  </section>
   <button v-if="!this.answerSubmitted" @click="this.submitAnswer()" class="send btn btn-success" type="button"> Send</button><br>
   <button v-if="this.answerSubmitted" @click="this.newQuestion()" class="nextq btn btn-primary" type="button"> Next question</button><br>
+  
+  
  
 </template>
 
@@ -51,14 +61,20 @@
 }
 </style>
 <script>
+import ScoreBoard from '/src/components/ScoreBoard.vue'
 export default{
   name:'App',
+  components:{ScoreBoard}
+,
+  
+
   data(){
     return{
       question:undefined,
       correctAnswer:undefined,
       chosenAnswer:undefined,
-      answerSubmitted:false
+      answerSubmitted:false,
+      scoreBoardOn: false
      
       
     }
@@ -66,6 +82,7 @@ export default{
   methods:{
     submitAnswer(){
       this.answerSubmitted=true;
+      this.scoreBoardOn=true;
             
       
     },
