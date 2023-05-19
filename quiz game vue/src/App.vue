@@ -38,7 +38,7 @@
   
   </div>
   <section v-if="this.scoreBoardOn" class="text-info" >
-    <h2><ScoreBoard /></h2>
+    <h2>Your Score is {{ correctAnswerCounter }}</h2>
       
 
   </section>
@@ -61,11 +61,12 @@
 }
 </style>
 <script>
-import ScoreBoard from '/src/components/ScoreBoard.vue'
+
+
 export default{
   name:'App',
-  components:{ScoreBoard}
-,
+ 
+
   
 
   data(){
@@ -74,7 +75,8 @@ export default{
       correctAnswer:undefined,
       chosenAnswer:undefined,
       answerSubmitted:false,
-      scoreBoardOn: false
+      scoreBoardOn: false,
+      correctAnswerCounter:0
      
       
     }
@@ -83,6 +85,10 @@ export default{
     submitAnswer(){
       this.answerSubmitted=true;
       this.scoreBoardOn=true;
+      if (this.chosenAnswer==this.correctAnswer){
+        this.correctAnswerCounter++;
+        
+      }
             
       
     },
